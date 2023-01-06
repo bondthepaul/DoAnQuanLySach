@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron">
+    <h1>Mega Library</h1>
+    <p class="lead">Nơi dừng chân cho mọi đọc giả.</p>
+    <p>Thư viện rộng lớn chứa nhiều kiến thức dành cho mọi lứa tuổi.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Thể loại sách đa dạng</h2>
+        <p>
+            Có rất nhiều thể loại cho mọi người.
+        </p>
+        <p style="padding-left:10px;">@Html.ActionLink("Tất cả các loại", "Index", "Categories", new { area = "" }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Chính trị – pháp luật", "Details", "Categories", new { id = 1 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Khoa học công nghệ – Kinh tế", "Details", "Categories", new { id = 2 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Văn học nghệ thuật", "Details", "Categories", new { id = 3 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Văn hóa xã hội – Lịch sử", "Details", "Categories", new { id = 4 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Giáo trình", "Details", "Categories", new { id = 5 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Truyện, tiểu thuyết", "Details", "Categories", new { id = 6 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Tâm lý, tâm linh, tôn giáo", "Details", "Categories", new { id = 7 }, new { @class = "btn btn-default" })</p>
+        <p style="padding-left:10px;">@Html.ActionLink("Thiếu nhi", "Details", "Categories", new { id = 8 }, new { @class = "btn btn-default" })</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Không có quảng cáo và bảo mật</h2>
+        <p>Trang được thiết kế optimal để không gây ảnh hưởng đến trải nghiệm người dùng.</p>
+        <img src="~/Content/images/noads.jpg" width="150px"/>
+        <img src="~/Content/images/secure.png" width="150px" />
+    </div>
+    <div class="col-md-4">
+        <h2>Đăng kí ngay</h2>
+        <p>Tạo tài khoản ngay để có thể trải nghiệm tối đa trang web này( Nếu bạn đã có tài khoản thì hãy đăng nhập ).</p>
+        <p>@Html.ActionLink("Đăng nhập", "Index", "Login", new { area = "" }, new { @class = "btn btn-danger" })</p>
+        <p>@Html.ActionLink("Đăng kí", "Signup", "Userrs", new { area = "" }, new { @class = "btn btn-info" })</p>
+    </div>
+</div>

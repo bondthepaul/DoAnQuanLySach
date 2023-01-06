@@ -1,0 +1,72 @@
+﻿@using DoAnQuanLySach.Models;
+@model List<Cartitem>
+@{
+    ViewBag.Title = "ToPay";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Thông tin hóa đơn</h2>
+@if (Model == null || Model.Count == 0)
+{
+    <p class="text-info text-center"> Giỏ hàng rỗng!!!! </p>
+}
+else
+{
+    <form action="/GioHang/ToPays" method="post">
+        <table class="table-bordered">
+            <tr>
+                <td>Ngày :</td>
+                <td>@DateTime.Now</td>
+            </tr>
+            <tr>
+                <td>Người đặt :</td>
+                <td>
+                    <input name="UserID" class="form-control" type="number" value=@Session["userid"] hidden />
+                    <input name="UserName" class="form-control" value=@Session["username"] hidden />
+                    @Session["accountname"]
+                </td>
+            </tr>
+            <tr>
+                <td>Tổng :</td>
+                <td><input name="Total" class="form-control" value=@Session["sumtotal"] hidden />@Session["sumtotal"]</td>
+            </tr>
+        </table>
+        <table class="table table-bordered">
+            <tr>
+                <th>Ảnh sách: </th>
+                <th>Tên sách: </th>
+                <th>Số lượng: </th>
+                <th>Giá một quyển: </th>
+                <th>Tổng giá: </th>
+            </tr>
+            @foreach (Cartitem item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.CoverPage" width="100px" />
+                    </td>
+                    <td>
+                        <a target="_blank" href="@Url.Action("Details", "Books", new { id = item.BookId })"> @item.Title </a>
+                    </td>
+                    <td>
+                            <input type="hidden" name="BookId" value="@item.BookId" />
+                            @item.Quantity
+                    </td>
+                    <td>
+                        @item.Price.ToString("#,##0").Replace(',', '.') VNĐ
+                    </td>
+                    <td>
+                        @item.Total.ToString("#,##0").Replace(',', '.') VNĐ
+                    </td>    
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td class="text-right" style="font-size:16px;">Tổng số lượng:</td>
+                <td style="font-size:16px;font:bold"> @Model.Sum(m => m.Quantity) </td>
+                <td class="text-right" style="font-size:16px;">Tổng tiền:</td>
+                <td style="font-size:16px;">@Model.Sum(m => m.Total).ToString("#,##0").Replace(',', '.') VNĐ </td>
+            </tr>
+        </table>
+        <input type="submit" value="Thanh toán" class="btn btn-danger" onclick="return confirm('Đặt hàng thành công');" />
+    </form>
+}

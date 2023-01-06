@@ -1,0 +1,66 @@
+﻿@model DoAnQuanLySach.Models.Cart
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết giỏ hàng</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Datebuy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Datebuy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Userr.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Userr.Username)
+        </dd>
+
+    </dl>
+</div>
+<h4>Chi tiết giỏ hàng</h4>
+<table class="table table-bordered">
+    <tr>
+        <th>ID sách</th>
+        <th>Tên sách</th>
+        <th>Giá tiền một quyển</th>
+        <th>Số lượng</th>
+    </tr>
+    @if (Model.CartDetails.Count > 0)
+    {
+        foreach (var item in Model.CartDetails)
+        {
+            <tr>
+                <td>@item.BookId</td>
+                <td><a target="_blank" href="@Url.Action("Details", "Books", new { id = item.BookId })"> @item.Book.Title </a></td>
+                <td>@item.Price vnđ </td>
+                <td>@item.Quantity</td>
+            </tr>
+        }
+    }
+</table>
+@if (Session["role"].ToString().CompareTo("2") == 0)
+{
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.CartId }) | @Html.ActionLink("Quay lại", "Index")
+</p>
+}

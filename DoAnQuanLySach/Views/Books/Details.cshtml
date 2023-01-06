@@ -1,0 +1,105 @@
+﻿@model DoAnQuanLySach.Models.Book
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết sách</h2>
+
+<div>
+   
+    <hr />
+    <table>
+        <tr><th>Sách</th><th></th></tr>
+        <tr>
+            <td>
+                <img src="@Model.CoverPage" alt="CoverPage" width="120" />
+            </td>
+            <td>
+                <dl class="dl-horizontal">
+                    <dt>
+                        Tên sách:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Title)
+                    </dd>
+
+                    <dt>
+                        Tên tác giả:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.AuthorName)
+                    </dd>
+
+                    <dt>
+                        Giá tiền:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Price)
+                    </dd>
+
+                    <dt>
+                        Sô lượng còn lại:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Amount)
+                    </dd>
+
+                    <dt>
+                        Năm xuất bản:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Year)
+                    </dd>
+
+                    <dt>
+                        Nhà sản xuất:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.PublisherName)
+                    </dd>
+
+                    <dt>
+                        Loại:
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.Category.CategoryName)
+                    </dd>
+
+                </dl>
+            </td>
+        </tr>
+    </table>
+
+</div>
+<a class="btn btn-danger" href="/giohang/AddToCart/@Html.DisplayFor(model => model.BookId)"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>
+<h4>Tóm tắt nội dung</h4>
+<ul>
+    @if (Model.Chapters.Count > 0)
+    {
+        foreach (var item in Model.Chapters)
+        {
+            <li>
+                <span>@item.ChapterName : @item.ShortContent</span>
+            </li>
+        }
+    }
+</ul>
+@if (Session["username"] != "" && Session["username"] != null)
+{
+    <p>
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.BookId }) |
+    </p>
+}
+<p>
+
+    @Html.ActionLink("Quay lại", "Listbooks")
+</p>

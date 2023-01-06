@@ -1,0 +1,146 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body >
+    <div class="navbar navbar-expand-sm bg-dark navbar-dark navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Mega Library", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li>@Html.ActionLink("Trang chủ", "Listbooks", "Books", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Loại sách
+                        </a>
+                        <div class="dropdown-menu bg-dark dropdown-menu-dark">
+                            <p style="padding-left:10px;">@Html.ActionLink("Tất cả các loại", "Index", "Categories", new { area = "" }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Chính trị – pháp luật", "Details", "Categories", new { id = 1 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Khoa học công nghệ – Kinh tế", "Details", "Categories", new { id = 2 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Văn học nghệ thuật", "Details", "Categories", new { id = 3 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Văn hóa xã hội – Lịch sử", "Details", "Categories", new { id = 4 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Giáo trình", "Details", "Categories", new { id = 5 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Truyện, tiểu thuyết", "Details", "Categories", new { id = 6 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Tâm lý, tâm linh, tôn giáo", "Details", "Categories", new { id = 7 }, new { @class = "dropdown-item" })</p>
+                            <div class="dropdown-divider"></div>
+                            <p style="padding-left:10px;">@Html.ActionLink("Thiếu nhi", "Details", "Categories", new { id = 8 }, new { @class = "dropdown-item" })</p>
+
+                        </div>
+                    </li>
+                </ul>
+
+                @if (Session["username"] != "" && Session["username"] != null)
+                {
+                    if (Session["role"].ToString().CompareTo("1") == 0)
+                    {
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Quản lý về người dùng
+                                </a>
+                                <div class="dropdown-menu bg-dark dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                                    <p style="padding-left:10px;">@Html.ActionLink("Loại người dùng", "Index", "TypeUsers", new { area = "" }, new { @class = "dropdown-item" })</p>
+                                    <div class="dropdown-divider"></div>
+                                    <p style="padding-left:10px;">@Html.ActionLink("Người dùng", "Index", "Userrs", new { area = "" }, new { @class = "dropdown-item" })</p>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Quản lý về giao dịch của người dùng
+                                </a>
+                                <div class="dropdown-menu bg-dark dropdown-menu-dark">
+                                    <p style="padding-left:10px;">@Html.ActionLink("Báo cáo", "BaoCao", "Carts", new { area = "" }, new { @class = "dropdown-item" })</p>
+                                    <div class="dropdown-divider"></div>
+                                    <p style="padding-left:10px;">@Html.ActionLink("Giỏ hàng", "Index", "Carts", new { area = "" }, new { @class = "dropdown-item" })</p>
+                                    <div class="dropdown-divider"></div>
+                                    <p style="padding-left:10px;">@Html.ActionLink("Chi tiết giỏ hàng", "Index", "CartDetails", new { area = "" }, new { @class = "dropdown-item" })</p>
+                                </div>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        if (Session["role"].ToString().CompareTo("2") == 0)
+                        {
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Quản lý về sách
+                    </a>
+                    <div class="dropdown-menu bg-dark dropdown-menu-dark">
+                        <p style="padding-left:10px;">@Html.ActionLink("Loại sách", "Index", "Categories", new { area = "" }, new { @class = "dropdown-item" })</p>
+                        <div class="dropdown-divider"></div>
+                        <p style="padding-left:10px;">@Html.ActionLink("Sách", "Index", "Books", new { area = "" }, new { @class = "dropdown-item" })</p>
+                        <div class="dropdown-divider"></div>
+                        <p style="padding-left:10px;">@Html.ActionLink("Chương sách", "Index", "Chapters", new { area = "" }, new { @class = "dropdown-item" })</p>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Quản lý về nhập sách
+                    </a>
+                    <div class="dropdown-menu bg-dark dropdown-menu-dark">
+                        <p style="padding-left:10px;">@Html.ActionLink("Nhập đơn hàng", "Index", "NhapHang", new { area = "" }, new { @class = "dropdown-item" })</p>
+                        <div class="dropdown-divider"></div>
+                        <p style="padding-left:10px;">@Html.ActionLink("Đơn nhập hàng", "Index", "Imports", new { area = "" }, new { @class = "dropdown-item" })</p>
+                        <div class="dropdown-divider"></div>
+                        <p style="padding-left:10px;">@Html.ActionLink("Chi tiết đơn nhập hàng", "Index", "ImportDetails", new { area = "" }, new { @class = "dropdown-item" })</p>
+                    </div>
+                </li>
+            </ul>
+                        }
+                    }
+                }
+            </div>
+            @if (Session["username"] != "" && Session["username"] != null)
+            {
+        <form class="d-flex">
+            <a class="btn btn-success" href="/Userrs/Details/@Session["userid"]" style="font-weight:200;"> <span class="glyphicon glyphicon-user"></span></a>
+            <a class="btn btn-info" href="/GioHang/index" style="font-weight:200;"> <span class="glyphicon glyphicon-shopping-cart"></span></a>
+            <br />
+            <a href="@Url.Action("Logout", "Login")" class="btn btn-danger" type="button">Đăng xuất</a>
+        </form>
+            }
+            else
+            {             
+        <form class="d-flex">
+            <a class="btn btn-info" href="/Userrs/Signup" style="font-weight:200;">Đăng kí</a>
+            <a href="/Login/Index" class="btn btn-danger" type="button">Đăng nhập</a>
+        </form>
+            }
+        </div>
+    </div>
+    <div class="container body-content"  >
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Quản lý sách</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

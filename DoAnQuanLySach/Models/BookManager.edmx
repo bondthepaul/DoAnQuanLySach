@@ -1,0 +1,603 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BookManagerDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="150" />
+          <Property Name="AuthorName" Type="nvarchar" MaxLength="150" />
+          <Property Name="Price" Type="float" />
+          <Property Name="Amount" Type="int" />
+          <Property Name="Year" Type="int" />
+          <Property Name="CoverPage" Type="varchar" MaxLength="150" />
+          <Property Name="CategoryId" Type="int" />
+          <Property Name="PublisherName" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="int" Nullable="false" />
+          <Property Name="Datebuy" Type="datetime" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Total" Type="float" />
+        </EntityType>
+        <EntityType Name="CartDetail">
+          <Key>
+            <PropertyRef Name="CartDetailId" />
+          </Key>
+          <Property Name="CartDetailId" Type="int" Nullable="false" />
+          <Property Name="CartId" Type="int" Nullable="false" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="float" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="CategoryName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Chapter">
+          <Key>
+            <PropertyRef Name="ChapterId" />
+          </Key>
+          <Property Name="ChapterId" Type="int" Nullable="false" />
+          <Property Name="ChapterName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ShortContent" Type="nvarchar" MaxLength="150" />
+          <Property Name="BookId" Type="int" />
+        </EntityType>
+        <EntityType Name="Import">
+          <Key>
+            <PropertyRef Name="ImportId" />
+          </Key>
+          <Property Name="ImportId" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" />
+          <Property Name="ExportName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Total" Type="float" />
+        </EntityType>
+        <EntityType Name="ImportDetail">
+          <Key>
+            <PropertyRef Name="ImportDetailId" />
+          </Key>
+          <Property Name="ImportDetailId" Type="int" Nullable="false" />
+          <Property Name="ImportId" Type="int" Nullable="false" />
+          <Property Name="BookId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Price" Type="float" />
+        </EntityType>
+        <EntityType Name="TypeUser">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Userr">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="150" />
+          <Property Name="Password" Type="nvarchar" MaxLength="150" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Dateofbirth" Type="datetime" />
+          <Property Name="TypeID" Type="int" />
+        </EntityType>
+        <Association Name="fk_idBook">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="Chapter" Type="Self.Chapter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="Chapter">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idBookCd">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="CartDetail" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="CartDetail">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idBookIm">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="ImportDetail" Type="Self.ImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="ImportDetail">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idCart">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartDetail" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartDetail">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idImport">
+          <End Role="Import" Type="Self.Import" Multiplicity="1" />
+          <End Role="ImportDetail" Type="Self.ImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Import">
+              <PropertyRef Name="ImportId" />
+            </Principal>
+            <Dependent Role="ImportDetail">
+              <PropertyRef Name="ImportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idType">
+          <End Role="TypeUser" Type="Self.TypeUser" Multiplicity="0..1" />
+          <End Role="Userr" Type="Self.Userr" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeUser">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Userr">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idUser">
+          <End Role="Userr" Type="Self.Userr" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userr">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookManagerDbModelStoreContainer">
+          <EntitySet Name="Book" EntityType="Self.Book" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CartDetail" EntityType="Self.CartDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chapter" EntityType="Self.Chapter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Import" EntityType="Self.Import" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImportDetail" EntityType="Self.ImportDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TypeUser" EntityType="Self.TypeUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Userr" EntityType="Self.Userr" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_idBook" Association="Self.fk_idBook">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Chapter" EntitySet="Chapter" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idBookCd" Association="Self.fk_idBookCd">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="CartDetail" EntitySet="CartDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idBookIm" Association="Self.fk_idBookIm">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="ImportDetail" EntitySet="ImportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idCart" Association="Self.fk_idCart">
+            <End Role="Cart" EntitySet="Cart" />
+            <End Role="CartDetail" EntitySet="CartDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idCategory" Association="Self.fk_idCategory">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Book" EntitySet="Book" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idImport" Association="Self.fk_idImport">
+            <End Role="Import" EntitySet="Import" />
+            <End Role="ImportDetail" EntitySet="ImportDetail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idType" Association="Self.fk_idType">
+            <End Role="TypeUser" EntitySet="TypeUser" />
+            <End Role="Userr" EntitySet="Userr" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idUser" Association="Self.fk_idUser">
+            <End Role="Userr" EntitySet="Userr" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BookManagerDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Book">
+          <Key>
+            <PropertyRef Name="BookId" />
+          </Key>
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="AuthorName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Double" />
+          <Property Name="Amount" Type="Int32" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="CoverPage" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="CategoryId" Type="Int32" />
+          <Property Name="PublisherName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Chapters" Relationship="Self.fk_idBook" FromRole="Book" ToRole="Chapter" />
+          <NavigationProperty Name="CartDetails" Relationship="Self.fk_idBookCd" FromRole="Book" ToRole="CartDetail" />
+          <NavigationProperty Name="ImportDetails" Relationship="Self.fk_idBookIm" FromRole="Book" ToRole="ImportDetail" />
+          <NavigationProperty Name="Category" Relationship="Self.fk_idCategory" FromRole="Book" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Cart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int32" Nullable="false" />
+          <Property Name="Datebuy" Type="DateTime" Precision="3" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Total" Type="Double" />
+          <NavigationProperty Name="CartDetails" Relationship="Self.fk_idCart" FromRole="Cart" ToRole="CartDetail" />
+          <NavigationProperty Name="Userr" Relationship="Self.fk_idUser" FromRole="Cart" ToRole="Userr" />
+        </EntityType>
+        <EntityType Name="CartDetail">
+          <Key>
+            <PropertyRef Name="CartDetailId" />
+          </Key>
+          <Property Name="CartDetailId" Type="Int32" Nullable="false" />
+          <Property Name="CartId" Type="Int32" Nullable="false" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Book" Relationship="Self.fk_idBookCd" FromRole="CartDetail" ToRole="Book" />
+          <NavigationProperty Name="Cart" Relationship="Self.fk_idCart" FromRole="CartDetail" ToRole="Cart" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="Self.fk_idCategory" FromRole="Category" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Chapter">
+          <Key>
+            <PropertyRef Name="ChapterId" />
+          </Key>
+          <Property Name="ChapterId" Type="Int32" Nullable="false" />
+          <Property Name="ChapterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ShortContent" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="BookId" Type="Int32" />
+          <NavigationProperty Name="Book" Relationship="Self.fk_idBook" FromRole="Chapter" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Import">
+          <Key>
+            <PropertyRef Name="ImportId" />
+          </Key>
+          <Property Name="ImportId" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="ExportName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Double" />
+          <NavigationProperty Name="ImportDetails" Relationship="Self.fk_idImport" FromRole="Import" ToRole="ImportDetail" />
+        </EntityType>
+        <EntityType Name="ImportDetail">
+          <Key>
+            <PropertyRef Name="ImportDetailId" />
+          </Key>
+          <Property Name="ImportDetailId" Type="Int32" Nullable="false" />
+          <Property Name="ImportId" Type="Int32" Nullable="false" />
+          <Property Name="BookId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Book" Relationship="Self.fk_idBookIm" FromRole="ImportDetail" ToRole="Book" />
+          <NavigationProperty Name="Import" Relationship="Self.fk_idImport" FromRole="ImportDetail" ToRole="Import" />
+        </EntityType>
+        <EntityType Name="TypeUser">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Userrs" Relationship="Self.fk_idType" FromRole="TypeUser" ToRole="Userr" />
+        </EntityType>
+        <EntityType Name="Userr">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Dateofbirth" Type="DateTime" Precision="3" />
+          <Property Name="TypeID" Type="Int32" />
+          <NavigationProperty Name="Carts" Relationship="Self.fk_idUser" FromRole="Userr" ToRole="Cart" />
+          <NavigationProperty Name="TypeUser" Relationship="Self.fk_idType" FromRole="Userr" ToRole="TypeUser" />
+        </EntityType>
+        <Association Name="fk_idBook">
+          <End Role="Book" Type="Self.Book" Multiplicity="0..1" />
+          <End Role="Chapter" Type="Self.Chapter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="Chapter">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idBookCd">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="CartDetail" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="CartDetail">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idBookIm">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="ImportDetail" Type="Self.ImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="BookId" />
+            </Principal>
+            <Dependent Role="ImportDetail">
+              <PropertyRef Name="BookId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idCategory">
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Book" Type="Self.Book" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Book">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idCart">
+          <End Role="Cart" Type="Self.Cart" Multiplicity="1" />
+          <End Role="CartDetail" Type="Self.CartDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="CartDetail">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idUser">
+          <End Role="Userr" Type="Self.Userr" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userr">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idImport">
+          <End Role="Import" Type="Self.Import" Multiplicity="1" />
+          <End Role="ImportDetail" Type="Self.ImportDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Import">
+              <PropertyRef Name="ImportId" />
+            </Principal>
+            <Dependent Role="ImportDetail">
+              <PropertyRef Name="ImportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_idType">
+          <End Role="TypeUser" Type="Self.TypeUser" Multiplicity="0..1" />
+          <End Role="Userr" Type="Self.Userr" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TypeUser">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Userr">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BookManagerDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Books" EntityType="Self.Book" />
+          <EntitySet Name="Carts" EntityType="Self.Cart" />
+          <EntitySet Name="CartDetails" EntityType="Self.CartDetail" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Chapters" EntityType="Self.Chapter" />
+          <EntitySet Name="Imports" EntityType="Self.Import" />
+          <EntitySet Name="ImportDetails" EntityType="Self.ImportDetail" />
+          <EntitySet Name="TypeUsers" EntityType="Self.TypeUser" />
+          <EntitySet Name="Userrs" EntityType="Self.Userr" />
+          <AssociationSet Name="fk_idBook" Association="Self.fk_idBook">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Chapter" EntitySet="Chapters" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idBookCd" Association="Self.fk_idBookCd">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="CartDetail" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idBookIm" Association="Self.fk_idBookIm">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="ImportDetail" EntitySet="ImportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idCategory" Association="Self.fk_idCategory">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Book" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idCart" Association="Self.fk_idCart">
+            <End Role="Cart" EntitySet="Carts" />
+            <End Role="CartDetail" EntitySet="CartDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idUser" Association="Self.fk_idUser">
+            <End Role="Userr" EntitySet="Userrs" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idImport" Association="Self.fk_idImport">
+            <End Role="Import" EntitySet="Imports" />
+            <End Role="ImportDetail" EntitySet="ImportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="fk_idType" Association="Self.fk_idType">
+            <End Role="TypeUser" EntitySet="TypeUsers" />
+            <End Role="Userr" EntitySet="Userrs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BookManagerDbModelStoreContainer" CdmEntityContainer="BookManagerDbEntities">
+          <EntitySetMapping Name="Books">
+            <EntityTypeMapping TypeName="BookManagerDbModel.Book">
+              <MappingFragment StoreEntitySet="Book">
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AuthorName" ColumnName="AuthorName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="CoverPage" ColumnName="CoverPage" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="PublisherName" ColumnName="PublisherName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Carts">
+            <EntityTypeMapping TypeName="BookManagerDbModel.Cart">
+              <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="Datebuy" ColumnName="Datebuy" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CartDetails">
+            <EntityTypeMapping TypeName="BookManagerDbModel.CartDetail">
+              <MappingFragment StoreEntitySet="CartDetail">
+                <ScalarProperty Name="CartDetailId" ColumnName="CartDetailId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="BookManagerDbModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Chapters">
+            <EntityTypeMapping TypeName="BookManagerDbModel.Chapter">
+              <MappingFragment StoreEntitySet="Chapter">
+                <ScalarProperty Name="ChapterId" ColumnName="ChapterId" />
+                <ScalarProperty Name="ChapterName" ColumnName="ChapterName" />
+                <ScalarProperty Name="ShortContent" ColumnName="ShortContent" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Imports">
+            <EntityTypeMapping TypeName="BookManagerDbModel.Import">
+              <MappingFragment StoreEntitySet="Import">
+                <ScalarProperty Name="ImportId" ColumnName="ImportId" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="ExportName" ColumnName="ExportName" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ImportDetails">
+            <EntityTypeMapping TypeName="BookManagerDbModel.ImportDetail">
+              <MappingFragment StoreEntitySet="ImportDetail">
+                <ScalarProperty Name="ImportDetailId" ColumnName="ImportDetailId" />
+                <ScalarProperty Name="ImportId" ColumnName="ImportId" />
+                <ScalarProperty Name="BookId" ColumnName="BookId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TypeUsers">
+            <EntityTypeMapping TypeName="BookManagerDbModel.TypeUser">
+              <MappingFragment StoreEntitySet="TypeUser">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Userrs">
+            <EntityTypeMapping TypeName="BookManagerDbModel.Userr">
+              <MappingFragment StoreEntitySet="Userr">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Dateofbirth" ColumnName="Dateofbirth" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

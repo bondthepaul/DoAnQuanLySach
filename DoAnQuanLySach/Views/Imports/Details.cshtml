@@ -1,0 +1,64 @@
+﻿@model DoAnQuanLySach.Models.Import
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Import</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExportName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExportName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+    </dl>
+</div>
+<h4>Chi tiết đơn nhập</h4>
+<table class="table table-bordered">
+    <tr>
+        <th>ID sách</th>
+        <th>Tên sách</th>
+        <th>Giá tiền một quyển</th>
+        <th>Số lượng</th>
+    </tr>
+    @if (Model.ImportDetails.Count > 0)
+    {
+        foreach (var item in Model.ImportDetails)
+        {
+<tr>
+    <td>@item.BookId</td>
+    <td><a target="_blank" href="@Url.Action("Details", "Books", new { id = item.BookId })"> @item.Book.Title </a></td>
+    <td>@item.Price vnđ </td>
+    <td>@item.Quantity</td>
+</tr>
+        }
+    }
+</table>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ImportId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

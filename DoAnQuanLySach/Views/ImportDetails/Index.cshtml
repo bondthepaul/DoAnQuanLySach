@@ -1,0 +1,50 @@
+﻿@model IEnumerable<DoAnQuanLySach.Models.ImportDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Import.ExportName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Import.ExportName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ImportDetailId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ImportDetailId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ImportDetailId })
+        </td>
+    </tr>
+}
+
+</table>

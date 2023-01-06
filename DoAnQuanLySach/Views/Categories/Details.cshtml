@@ -1,0 +1,98 @@
+﻿@model DoAnQuanLySach.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("1") == 0)
+{
+    <img src="~/Content/images/bannercate1.jpg" width="100%" />
+}
+else
+{
+    if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("2") == 0)
+    {
+        <img src="~/Content/images/bannercate2.jpg" width="100%" />
+    }
+    else
+    {
+        if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("3") == 0)
+        {
+            <img src="~/Content/images/bannercate3.jpg" width="100%" />
+        }
+        else
+        {
+            if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("4") == 0)
+            {
+                <img src="~/Content/images/bannercate4.jpg" width="100%" />
+            }
+            else
+            {
+                if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("5") == 0)
+                {
+                    <img src="~/Content/images/bannercate5.jpg" width="100%" />
+                }
+                else
+                {
+                    if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("6") == 0)
+                    {
+                        <img src="~/Content/images/bannercate6.jpg" width="100%" />
+                    }
+                    else
+                    {
+                        if (@Html.DisplayFor(model => model.CategoryId).ToString().CompareTo("7") == 0)
+                        {
+                            <img src="~/Content/images/bannercate7.jpg" width="100%" />
+                        }
+                        else
+                        {
+                            <img src="~/Content/images/bannercate8.jpg" width="100%" />
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+<h2 style="padding:20px">Danh sách sách theo loại: @Html.DisplayFor(model => model.CategoryName)</h2>
+<div style="display: flex; flex-wrap: wrap; justify-content: center; ">
+    @if (Model.Books.Count > 0)
+    {
+        foreach (var item in Model.Books)
+        {
+            <div class="card mb-3" style="max-width:360px;margin-left:10px;padding-left:15px">
+                <div class="row g-0">
+                    <div class="col-md-6" style="margin:0px;padding:0px">
+                        <img src="@Html.DisplayFor(modelItem => item.CoverPage)" class="img-fluid rounded-start" alt="...">
+                        <div class="card-body bg-dark" align="center">
+                            <a class="btn btn-success" href="/Books/Details/@item.BookId" style="width:128px;margin-bottom:5px"> Chi tiết </a>
+                            <br />
+                            <a class="btn btn-danger" href="/giohang/AddToCart/@item.BookId"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin:0px;padding-right:15px;padding-left:0px">
+                        <div class="card-header">@Html.DisplayFor(modelItem => item.Title)</div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="font:bold;font-size:20px;">@Html.DisplayFor(modelItem => item.Price)Vnđ</h5>
+                            <p class="card-text">Loại: @Html.DisplayFor(modelItem => item.Category.CategoryName)</p>
+                            <p class="card-text">Tác giả: @Html.DisplayFor(modelItem => item.AuthorName)</p>
+                            <p class="card-text">Nhà xuất bản: @Html.DisplayFor(modelItem => item.PublisherName)</p>
+                            <p class="card-text">Xuất bản năm: @Html.DisplayFor(modelItem => item.Year)</p>
+                            <p class="card-text">Số lượng sách còn: @Html.DisplayFor(modelItem => item.Amount)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+@if (Session["username"] != "" && Session["username"] != null)
+{
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.CategoryId }) 
+</p>
+}
+<p>
+    
+    @Html.ActionLink("Quay lại", "Index")
+</p>

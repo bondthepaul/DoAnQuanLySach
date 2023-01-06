@@ -1,0 +1,167 @@
+﻿@model IEnumerable<DoAnQuanLySach.Models.Book>
+
+@{
+    ViewBag.Title = "Listbooks";
+}
+<img src="~/Content/images/Banner.gif" />
+@if (Session["Timkiem"].ToString().CompareTo("-1") == 0)
+{<h3>Sách mới</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; ">
+        @foreach (var item in Model)
+        {
+            if (@item.BookId > Model.Count() - 3)
+            {
+                <div class="card mb-3" style="max-width:360px;margin-left:10px;padding-left:15px">
+                    <div class="row g-0">
+                        <div class="col-md-6" style="margin:0px;padding:0px">
+                            <img src="@Html.DisplayFor(modelItem => item.CoverPage)" class="img-fluid rounded-start" alt="...">
+                            <div class="card-body bg-dark" align="center">
+                                <a class="btn btn-success" href="/Books/Details/@item.BookId" style="width:128px;margin-bottom:5px"> Chi tiết </a>
+                                <br />
+                                <a class="btn btn-danger" href="/GioHang/AddToCart/@item.BookId"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin:0px;padding-right:15px;padding-left:0px">
+                            <div class="card-header">@Html.DisplayFor(modelItem => item.Title)</div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font:bold;font-size:20px;">@Html.DisplayFor(modelItem => item.Price)Vnđ</h5>
+                                <p class="card-text">Loại: @Html.DisplayFor(modelItem => item.Category.CategoryName)</p>
+                                <p class="card-text">Tác giả: @Html.DisplayFor(modelItem => item.AuthorName)</p>
+                                <p class="card-text">Nhà xuất bản: @Html.DisplayFor(modelItem => item.PublisherName)</p>
+                                <p class="card-text">Xuất bản năm: @Html.DisplayFor(modelItem => item.Year)</p>
+                                <p class="card-text">Số lượng sách còn: @Html.DisplayFor(modelItem => item.Amount)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>}
+@using (Html.BeginForm("Listbooks", "Books", FormMethod.Get))
+{
+    <h3>Tìm kiếm sách</h3>
+
+    <table class="table">
+        <tr>
+            <td>
+                <span class="input-group-text" style="width:300px;margin:0px;font-size:15px">Tên sách:@Html.TextBox("SearchString", "", new { @class = "form-control" })</span>
+            </td>
+            <td>
+                <span class="input-group-text" style="width:320px;height:43.5px ;margin:0px;font-size:15px">Loại sách: @Html.DropDownList("CategoryID", "Tất cả")</span>
+            </td>
+            <td>
+                <span class="input-group-text" style="width:300px;margin:0px;font-size:15px">Nhà xuất bản: @Html.TextBox("Publisherr", "", new { @class = "form-control" })</span>
+            </td>
+            <td>
+                <input type="submit" value="Search" class="btn btn-danger" style="margin-top:5px" />
+            </td>
+
+        </tr>
+    </table>
+}
+@if (Session["Timkiem"].ToString().CompareTo("-1") == 0)
+{
+    <h3>Sách phổ biến</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; ">
+        @foreach (var item in Model)
+        {
+            if (@item.BookId < 4)
+            {
+                <div class="card mb-3" style="max-width:360px;margin-left:10px;padding-left:15px">
+                    <div class="row g-0">
+                        <div class="col-md-6" style="margin:0px;padding:0px">
+                            <img src="@Html.DisplayFor(modelItem => item.CoverPage)" class="img-fluid rounded-start" alt="...">
+                            <div class="card-body bg-dark" align="center">
+                                <a class="btn btn-success" href="/Books/Details/@item.BookId" style="width:128px;margin-bottom:5px"> Chi tiết </a>
+                                <br />
+                                <a class="btn btn-danger" href="/GioHang/AddToCart/@item.BookId"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6" style="margin:0px;padding-right:15px;padding-left:0px">
+                            <div class="card-header">@Html.DisplayFor(modelItem => item.Title)</div>
+                            <div class="card-body">
+                                <h5 class="card-title" style="font:bold;font-size:20px;">@Html.DisplayFor(modelItem => item.Price)Vnđ</h5>
+                                <p class="card-text">Loại: @Html.DisplayFor(modelItem => item.Category.CategoryName)</p>
+                                <p class="card-text">Tác giả: @Html.DisplayFor(modelItem => item.AuthorName)</p>
+                                <p class="card-text">Nhà xuất bản: @Html.DisplayFor(modelItem => item.PublisherName)</p>
+                                <p class="card-text">Xuất bản năm: @Html.DisplayFor(modelItem => item.Year)</p>
+                                <p class="card-text">Số lượng sách còn: @Html.DisplayFor(modelItem => item.Amount)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <div style="width: 100%; height: 50px;" class="bg-primary">
+        <h3 align="center" style="color:white;padding-top:10px ">Sách theo loại</h3>
+    </div>
+    foreach (var i in ViewBag.category)
+    {
+        <hr class="rounded">
+    <h3>@i.CategoryName <a href="/Categories/Details/@i.CategoryId" class="btn btn-primary"> Xem thêm </a></h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; ">
+        @foreach (var item in Model)
+        {
+            if(item.CategoryId==i.CategoryId)
+            {
+            <div class="card mb-3" style="max-width:360px;margin-left:10px;padding-left:15px">
+                <div class="row g-0">
+                    <div class="col-md-6" style="margin:0px;padding:0px">
+                        <img src="@Html.DisplayFor(modelItem => item.CoverPage)" class="img-fluid rounded-start" alt="...">
+                        <div class="card-body bg-dark" align="center">
+                            <a class="btn btn-success" href="/Books/Details/@item.BookId" style="width:128px;margin-bottom:5px"> Chi tiết </a>
+                            <br />
+                            <a class="btn btn-danger" href="/giohang/AddToCart/@item.BookId"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin:0px;padding-right:15px;padding-left:0px">
+                        <div class="card-header">@Html.DisplayFor(modelItem => item.Title)</div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="font:bold;font-size:20px;">@Html.DisplayFor(modelItem => item.Price)Vnđ</h5>
+                            <p class="card-text">Loại: @Html.DisplayFor(modelItem => item.Category.CategoryName)</p>
+                            <p class="card-text">Tác giả: @Html.DisplayFor(modelItem => item.AuthorName)</p>
+                            <p class="card-text">Nhà xuất bản: @Html.DisplayFor(modelItem => item.PublisherName)</p>
+                            <p class="card-text">Xuất bản năm: @Html.DisplayFor(modelItem => item.Year)</p>
+                            <p class="card-text">Số lượng sách còn: @Html.DisplayFor(modelItem => item.Amount)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            }
+        }
+    </div>
+    }
+}
+else
+{
+    <h3>Sách cần tìm</h3>
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; ">
+        @foreach (var item in Model)
+        {
+            <div class="card mb-3" style="max-width:360px;margin-left:10px;padding-left:15px">
+                <div class="row g-0">
+                    <div class="col-md-6" style="margin:0px;padding:0px">
+                        <img src="@Html.DisplayFor(modelItem => item.CoverPage)" class="img-fluid rounded-start" alt="...">
+                        <div class="card-body bg-dark" align="center">
+                            <a class="btn btn-success" href="/Books/Details/@item.BookId" style="width:128px;margin-bottom:5px"> Chi tiết </a>
+                            <br />
+                            <a class="btn btn-danger" href="/giohang/AddToCart/@item.BookId"> <span class="glyphicon glyphicon-shopping-cart"></span> Thêm vào giỏ </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6" style="margin:0px;padding-right:15px;padding-left:0px">
+                        <div class="card-header">@Html.DisplayFor(modelItem => item.Title)</div>
+                        <div class="card-body">
+                            <h5 class="card-title" style="font:bold;font-size:20px;">@Html.DisplayFor(modelItem => item.Price)Vnđ</h5>
+                            <p class="card-text">Loại: @Html.DisplayFor(modelItem => item.Category.CategoryName)</p>
+                            <p class="card-text">Tác giả: @Html.DisplayFor(modelItem => item.AuthorName)</p>
+                            <p class="card-text">Nhà xuất bản: @Html.DisplayFor(modelItem => item.PublisherName)</p>
+                            <p class="card-text">Xuất bản năm: @Html.DisplayFor(modelItem => item.Year)</p>
+                            <p class="card-text">Số lượng sách còn: @Html.DisplayFor(modelItem => item.Amount)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

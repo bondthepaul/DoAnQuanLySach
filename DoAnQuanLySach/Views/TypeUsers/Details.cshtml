@@ -1,0 +1,30 @@
+﻿@model DoAnQuanLySach.Models.TypeUser
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Chi tiết loại người dùng</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TypeName)
+        </dd>
+
+    </dl>
+</div>
+@if (Session["role"].ToString().CompareTo("1") == 0)
+{ <p>
+        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.TypeId }) |
+        @Html.ActionLink("Quay lại", "Index")
+    </p>
+}
+

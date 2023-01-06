@@ -1,0 +1,52 @@
+﻿@model IEnumerable<DoAnQuanLySach.Models.CartDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách giỏ hàng chi tiết</h2>
+
+<p>
+    @Html.ActionLink("Tạo giỏ hàng chi tiết", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cart.CartId)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cart.CartId)
+        </td>
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.CartDetailId }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.CartDetailId }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.CartDetailId })
+        </td>
+    </tr>
+}
+
+</table>

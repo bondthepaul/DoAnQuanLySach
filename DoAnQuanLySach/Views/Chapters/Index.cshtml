@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DoAnQuanLySach.Models.Chapter>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Danh sách chương</h2>
+
+<p>
+    @Html.ActionLink("Tạo chương mới", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ChapterName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShortContent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChapterName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ShortContent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Title)
+        </td>
+        <td>
+            @Html.ActionLink("Chỉnh sửa", "Edit", new { id=item.ChapterId }) |
+            @Html.ActionLink("Chi tiết", "Details", new { id=item.ChapterId }) |
+            @Html.ActionLink("Xóa", "Delete", new { id=item.ChapterId })
+        </td>
+    </tr>
+}
+
+</table>

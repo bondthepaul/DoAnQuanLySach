@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body align="center">
+    
+    <h3 align="center">ĐĂNG NHẬP</h3>
+    <p class="alert-danger" align="center">@ViewBag.error</p>
+    <form method="post" action="@Url.Action("Login", "Login")">
+        <table border="0" cellpadding="2" cellspacing="2" align="center" ">
+            <tr>
+                <td><span class="input-group-text" id="basic-addon1" style="font-size:15px">Tên đăng nhập:</span></td>
+                <td><input type="text" name="username" class="form-control"></td>
+            </tr>
+            <tr>
+                <td><span class="input-group-text" id="basic-addon1" style="font-size:15px;">Mật khẩu:</span></td>
+                <td><input type="password" class="form-control" name="password"></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Đăng nhập"> <a href="../Userrs/Signup">Đăng kí</a></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
+

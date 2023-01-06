@@ -1,0 +1,88 @@
+﻿@model IEnumerable<DoAnQuanLySach.Models.Book>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Đanh sách</h2>
+@if (Session["username"] != "" && Session["username"] != null)
+{
+<p>
+    @Html.ActionLink("Tạo sách mới", "Create")
+</p>
+}
+<table class="table">
+    <tr>
+        <th width="200px">
+            Tên sách
+        </th>
+        <th>
+            Tên tác giả
+        </th>
+        <th>
+            Giá sách
+        </th>
+        <th>
+            Số lượng
+        </th>
+        <th>
+            Năm xuất bản
+        </th>
+        <th>
+            Hình ảnh
+        </th>
+        <th>
+            Tên loại sách
+        </th>
+        <th>
+            Loại sách
+        </th>
+        <th></th>
+        @if (Session["username"] != "" && Session["username"] != null)
+        {
+            <th></th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.AuthorName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Amount)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Year)
+    </td>
+    <td style="text-align: center">
+        <img src="@item.CoverPage" width="150" title="Cover" />
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PublisherName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+    </td>
+    <td>
+        @Html.ActionLink("Chi tiết", "Details", new { id = item.BookId })
+    </td>
+    @if (Session["username"] != "" && Session["username"] != null)
+    {
+        <td>
+            @Html.ActionLink("Sửa", "Edit", new { id = item.BookId }) |
+            @Html.ActionLink("Xóa", "Delete", new { id = item.BookId })
+        </td>
+    }
+</tr>
+    }
+
+</table>

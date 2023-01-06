@@ -1,0 +1,48 @@
+﻿@model IEnumerable<DoAnQuanLySach.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Tất cả loại sách</h2>
+@if (Session["username"] != "" && Session["username"] != null)
+{
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Loại sách
+        </th>
+        <th></th>
+        @if (Session["username"] != "" && Session["username"] != null)
+        {
+            <th></th>
+        }
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryName)
+            </td>
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.CategoryId })
+            </td>
+            @if (Session["username"] != "" && Session["username"] != null)
+            {
+                <td>
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.CategoryId }) |
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.CategoryId })
+                </td>
+            }
+
+        </tr>
+    }
+
+</table>

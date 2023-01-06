@@ -1,0 +1,53 @@
+﻿@model DoAnQuanLySach.Models.CartDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Thông tin chi tiết</h2>
+
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Book.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cart.CartId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cart.CartId)
+        </dd>
+
+    </dl>
+</div>
+@if (Session["role"].ToString().CompareTo("2") == 0)
+{
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.CartDetailId }) | @Html.ActionLink("Quay lại", "Index")
+</p>
+}
